@@ -17,7 +17,7 @@ const getAppById = async (req, res) => {
         if (mobileapp) {
             res.status(200).json(mobileapp);
         } else {
-            res.status(404).json({ message: 'Skill not found' });
+            res.status(404).json({ message: 'App not found' });
         }
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -25,7 +25,7 @@ const getAppById = async (req, res) => {
 };
 
 
-// Create a new skill
+// Create a new mobile App entry
 const createMobileApp = async (req, res) => {
     const mobileapp = new MobileApp({
         name: req.body.name,
@@ -59,10 +59,27 @@ const updateApp = async (req, res) => {
     }
 };
 
+
+// Delete an app
+const deleteApp = async (req, res) => {
+    try {
+        const mobileapp = await MobileApp.findById(req.params.id);
+        if (mobileapp) {
+            await mobileapp.deleteOne();
+            res.status(200).json({ message: 'Mobile App deleted successfully' });
+        } else {
+            res.status(404).json({ message: 'Mobile App not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 module.exports = {
     getAllApps,
     getAppById,
     createMobileApp,
     updateApp,
-
+    deleteApp
 };
