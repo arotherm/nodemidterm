@@ -24,8 +24,28 @@ const getAppById = async (req, res) => {
     }
 };
 
+
+// Create a new skill
+const createMobileApp = async (req, res) => {
+    const mobileapp = new MobileApp({
+        name: req.body.name,
+        description: req.body.description,
+        level: req.body.level,
+        yearsOfExperience: req.body.yearsOfExperience
+    });
+
+    try {
+        const newMobileApp = await mobileapp.save();
+        res.status(201).json(newMobileApp);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 module.exports = {
     getAllApps,
     getAppById,
+    createMobileApp,
+
 
 };
