@@ -10,3 +10,22 @@ const getAllApps = async (req, res) => {
     }
 };
 
+// Get a single App by ID
+const getAppById = async (req, res) => {
+    try {
+        const mobileapp = await MobileApp.findById(req.params.id);
+        if (mobileapp) {
+            res.status(200).json(mobileapp);
+        } else {
+            res.status(404).json({ message: 'Skill not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+module.exports = {
+    getAllApps,
+    getAppById,
+
+};
