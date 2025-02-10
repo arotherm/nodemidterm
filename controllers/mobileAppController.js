@@ -42,10 +42,27 @@ const createMobileApp = async (req, res) => {
     }
 };
 
+
+// Update a app
+const updateApp = async (req, res) => {
+    try {
+        const mobileapp = await MobileApp.findById(req.params.id);
+        if (mobileapp) {
+            Object.assign(mobileapp, req.body);
+            const updatedApp = await mobileapp.save();
+            res.status(200).json(updatedApp);
+        } else {
+            res.status(404).json({ message: 'The specified app was not found' });
+        }
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 module.exports = {
     getAllApps,
     getAppById,
     createMobileApp,
-
+    updateApp,
 
 };
