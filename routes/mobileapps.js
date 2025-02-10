@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { getAllApps, getAppById, createApp, updateApp, deleteApp } = require('../controllers/mobileAppController');
+const { getAllApps, getAppById, createApp, updateApp, deleteApp } = require('../controllers/mobileAppController.js');
+const {createMobileApp} = require("../controllers/mobileAppController");
 
 /**
  * @swagger
- * /api/Apps:
+ * /api/apps:
  *   get:
  *     summary: Retrieve all Apps
  *     tags: [Apps]
@@ -18,11 +19,12 @@ const { getAllApps, getAppById, createApp, updateApp, deleteApp } = require('../
  *               items:
  *                 $ref: '#/components/schemas/MobileApp'
  */
+
 router.get('/', getAllApps);
 
 /**
  * @swagger
- * /api/Apps/{id}:
+ * /api/apps/{id}:
  *   get:
  *     summary: Get a mobile app by id
  *     tags: [Apps]
@@ -43,11 +45,11 @@ router.get('/', getAllApps);
  *       404:
  *         description: App not found
  */
-router.get('/:id', getAppById());
+router.get('/:id', getAppById);
 
 /**
  * @swagger
- * /api/Apps:
+ * /api/apps:
  *   post:
  *     summary: Create a new App
  *     tags: [Apps]
@@ -63,11 +65,11 @@ router.get('/:id', getAppById());
  *       400:
  *         description: Invalid input
  */
-router.post('/', createApp);
+router.post('/', createMobileApp);
 
 /**
  * @swagger
- * /api/Apps/{id}:
+ * /api/apps/{id}:
  *   put:
  *     summary: Update a App by id
  *     tags: [Apps]
@@ -94,9 +96,9 @@ router.put('/:id', updateApp);
 
 /**
  * @swagger
- * /api/Apps/{id}:
+ * /api/apps/{id}:
  *   delete:
- *     summary: Delete a App by id
+ *     summary: Delete an App by id
  *     tags: [Apps]
  *     parameters:
  *       - in: path
@@ -122,8 +124,8 @@ router.delete('/:id', deleteApp);
  *       required:
  *         - name
  *         - description
- *         - level
- *         - yearsOfExperience
+ *         - developer
+ *         - price
  *       properties:
  *         name:
  *           type: string
@@ -131,15 +133,19 @@ router.delete('/:id', deleteApp);
  *         description:
  *           type: string
  *           description: Detailed description of the App
- *         level:
+ *         rating:
  *           type: number
  *           minimum: 1
  *           maximum: 10
- *           description: Proficiency level (1-10)
- *         yearsOfExperience:
+ *           description: Rating (1-10)
+ *         developer:
+ *           type: string
+ *           description: Who made the app
+ *         price:
  *           type: number
  *           minimum: 0
- *           description: Years of experience in this App
+ *           maximum: 9999
+ *
  */
 
 module.exports = router;

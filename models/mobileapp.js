@@ -9,16 +9,16 @@ const mobileAppSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Rating: {
+    rating: {
         type: Number,
         min: 1,
         max: 10
     },
-    Developer: {
+    developer: {
         type: String,
         required: true
     },
-    Price : {
+    price : {
         type: Number,
         min: 0,
         max: 9999,

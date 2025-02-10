@@ -30,8 +30,9 @@ const createMobileApp = async (req, res) => {
     const mobileapp = new MobileApp({
         name: req.body.name,
         description: req.body.description,
-        level: req.body.level,
-        yearsOfExperience: req.body.yearsOfExperience
+        rating: req.body.rating,
+        developer: req.body.developer,
+        price: req.body.price
     });
 
     try {
@@ -74,6 +75,7 @@ const deleteApp = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 
 module.exports = {

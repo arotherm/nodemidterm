@@ -7,31 +7,36 @@ dotenv.config()
 
 const app = express();
 
+// Middleware
+app.use(express.json());
+
 // Swagger configuration
 const swaggerOptions = {
     definition: {
         openapi: '3.0.0',
         info: {
             title: 'Mobile Apps Library RESTful API',
-            version: '1.3.3.7.',
-            description: 'A REST API for managing skills',
+            version: '1.0.0',
+            description: 'A REST API for managing apps',
         },
         servers: [
             {
-                url: 'http://localhost:3000',
+                url: 'http://localhost:3178',
                 description: 'Development server',
             },
         ],
     },
-    apis: ['./controllers/*.js']
+    apis: ['./routes/*.js'],
 };
 
 
-// Middleware
-app.use(express.json());
 
-//MongoDB connection to midterm.midterm
 
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+
+//MongoDB connection to midterm database
 mongoose.connect(process.env.DBURL, {
     serverSelectionTimeoutMS: 5000,
     family: 4
@@ -43,6 +48,12 @@ mongoose.connect(process.env.DBURL, {
         console.error('MongoDB connection error:', error.message);
         process.exit(1);
     });
+
+// Routes
+const mobileAppRoutes = require('./routes/mobileapps');
+app.use('/api/apps', mobileAppRoutes);
+
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
