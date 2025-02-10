@@ -33,7 +33,12 @@ const swaggerOptions = {
 
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+// Serve Swagger documentation
+app.use('/midterm-api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs, { customCssUrl: CSS_URL }));
+
+
+
 
 
 //MongoDB connection to midterm database
